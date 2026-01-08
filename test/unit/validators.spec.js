@@ -88,39 +88,50 @@ describe('Validators', function () {
       actionLocator: { using: 'id', value: 'close' },
       duration: 30000,
     };
+    const defaultMaxDuration = 60000; // Default max duration
 
     it('should pass for valid watcher params', function () {
-      expect(() => validateWatcherParams(validParams)).to.not.throw();
+      expect(() => validateWatcherParams(validParams, defaultMaxDuration)).to.not.throw();
     });
 
     it('should throw error if params is null', function () {
-      expect(() => validateWatcherParams(null)).to.throw('Invalid watcher parameters');
+      expect(() => validateWatcherParams(null, defaultMaxDuration)).to.throw(
+        'Invalid watcher parameters'
+      );
     });
 
     it('should throw error if params is undefined', function () {
-      expect(() => validateWatcherParams(undefined)).to.throw('Invalid watcher parameters');
+      expect(() => validateWatcherParams(undefined, defaultMaxDuration)).to.throw(
+        'Invalid watcher parameters'
+      );
     });
 
     it('should throw error if name is missing', function () {
       const params = { ...validParams };
       delete params.name;
-      expect(() => validateWatcherParams(params)).to.throw('UIWatcher name is required');
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
+        'UIWatcher name is required'
+      );
     });
 
     it('should throw error if name is empty string', function () {
       const params = { ...validParams, name: '' };
-      expect(() => validateWatcherParams(params)).to.throw('UIWatcher name is required');
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
+        'UIWatcher name is required'
+      );
     });
 
     it('should throw error if name is whitespace only', function () {
       const params = { ...validParams, name: '   ' };
-      expect(() => validateWatcherParams(params)).to.throw('UIWatcher name is empty');
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
+        'UIWatcher name is empty'
+      );
     });
 
     it('should throw error if referenceLocator is missing', function () {
       const params = { ...validParams };
       delete params.referenceLocator;
-      expect(() => validateWatcherParams(params)).to.throw(
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
         'UIWatcher referenceLocator is required'
       );
     });
@@ -128,54 +139,60 @@ describe('Validators', function () {
     it('should throw error if actionLocator is missing', function () {
       const params = { ...validParams };
       delete params.actionLocator;
-      expect(() => validateWatcherParams(params)).to.throw('UIWatcher actionLocator is required');
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
+        'UIWatcher actionLocator is required'
+      );
     });
 
     it('should throw error if duration is missing', function () {
       const params = { ...validParams };
       delete params.duration;
-      expect(() => validateWatcherParams(params)).to.throw('UIWatcher duration is required');
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
+        'UIWatcher duration is required'
+      );
     });
 
     it('should throw error if duration is 0', function () {
       const params = { ...validParams, duration: 0 };
-      expect(() => validateWatcherParams(params)).to.throw(
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
         'UIWatcher duration must be a positive number'
       );
     });
 
     it('should throw error if duration is negative', function () {
       const params = { ...validParams, duration: -1000 };
-      expect(() => validateWatcherParams(params)).to.throw(
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
         'UIWatcher duration must be a positive number'
       );
     });
 
     it('should throw error if duration > 60000', function () {
       const params = { ...validParams, duration: 60001 };
-      expect(() => validateWatcherParams(params)).to.throw(
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
         'UIWatcher duration must be ≤ 60 seconds'
       );
     });
 
     it('should accept duration = 60000', function () {
       const params = { ...validParams, duration: 60000 };
-      expect(() => validateWatcherParams(params)).to.not.throw();
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.not.throw();
     });
 
     it('should throw error if priority is not a number', function () {
       const params = { ...validParams, priority: 'high' };
-      expect(() => validateWatcherParams(params)).to.throw('UIWatcher priority must be a number');
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
+        'UIWatcher priority must be a number'
+      );
     });
 
     it('should accept negative priority values', function () {
       const params = { ...validParams, priority: -10 };
-      expect(() => validateWatcherParams(params)).to.not.throw();
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.not.throw();
     });
 
     it('should throw error if stopOnFound is not a boolean', function () {
       const params = { ...validParams, stopOnFound: 'true' };
-      expect(() => validateWatcherParams(params)).to.throw(
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
         'UIWatcher stopOnFound must be a boolean'
       );
     });
@@ -183,23 +200,27 @@ describe('Validators', function () {
     it('should accept stopOnFound as true or false', function () {
       const params1 = { ...validParams, stopOnFound: true };
       const params2 = { ...validParams, stopOnFound: false };
-      expect(() => validateWatcherParams(params1)).to.not.throw();
-      expect(() => validateWatcherParams(params2)).to.not.throw();
+      expect(() => validateWatcherParams(params1, defaultMaxDuration)).to.not.throw();
+      expect(() => validateWatcherParams(params2, defaultMaxDuration)).to.not.throw();
     });
 
     it('should throw error if cooldownMs is not a number', function () {
       const params = { ...validParams, cooldownMs: '5000' };
-      expect(() => validateWatcherParams(params)).to.throw('UIWatcher cooldownMs must be a number');
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
+        'UIWatcher cooldownMs must be a number'
+      );
     });
 
     it('should throw error if cooldownMs is negative', function () {
       const params = { ...validParams, cooldownMs: -100 };
-      expect(() => validateWatcherParams(params)).to.throw('UIWatcher cooldownMs must be ≥ 0');
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
+        'UIWatcher cooldownMs must be ≥ 0'
+      );
     });
 
     it('should accept cooldownMs = 0', function () {
       const params = { ...validParams, cooldownMs: 0 };
-      expect(() => validateWatcherParams(params)).to.not.throw();
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.not.throw();
     });
 
     it('should accept all valid optional parameters', function () {
@@ -209,7 +230,17 @@ describe('Validators', function () {
         stopOnFound: true,
         cooldownMs: 5000,
       };
-      expect(() => validateWatcherParams(params)).to.not.throw();
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.not.throw();
+    });
+
+    it('should respect custom maxDurationMs parameter', function () {
+      const params = { ...validParams, duration: 90000 };
+      // Should fail with default (60000)
+      expect(() => validateWatcherParams(params, defaultMaxDuration)).to.throw(
+        'UIWatcher duration must be ≤'
+      );
+      // Should pass with custom limit (120000)
+      expect(() => validateWatcherParams(params, 120000)).to.not.throw();
     });
   });
 });

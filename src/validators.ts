@@ -3,11 +3,6 @@
  */
 
 /**
- * Maximum allowed duration for a watcher (60 seconds)
- */
-const MAX_DURATION_MS = 60000;
-
-/**
  * Valid Appium locator strategies
  */
 const VALID_LOCATOR_STRATEGIES = [
@@ -62,9 +57,10 @@ export function validateLocator(locator: any, fieldName: string): void {
 /**
  * Validates all watcher registration parameters
  * @param params - Watcher registration parameters
+ * @param maxDurationMs - Maximum allowed duration in milliseconds
  * @throws Error if any validation rule fails
  */
-export function validateWatcherParams(params: any): void {
+export function validateWatcherParams(params: any, maxDurationMs: number): void {
   // Check if params exists
   if (!params || typeof params !== 'object') {
     throw new Error('Invalid watcher parameters');
@@ -104,8 +100,8 @@ export function validateWatcherParams(params: any): void {
     throw new Error('UIWatcher duration must be a positive number');
   }
 
-  if (params.duration > MAX_DURATION_MS) {
-    throw new Error('UIWatcher duration must be ≤ 60 seconds');
+  if (params.duration > maxDurationMs) {
+    throw new Error(`UIWatcher duration must be ≤ ${maxDurationMs / 1000} seconds`);
   }
 
   // Validate optional field: priority (if provided)

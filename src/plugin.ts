@@ -7,6 +7,7 @@ import { clearAllUIWatchers } from './commands/clear.js';
 import { listUIWatchers } from './commands/list.js';
 import { disableUIWatchers, enableUIWatchers } from './commands/toggle.js';
 import { checkWatchers } from './watcher-checker.js';
+import { DefaultPluginConfig, type PluginConfig } from './config.js';
 
 const log = logger.getLogger('AppiumUIWatchers');
 
@@ -20,6 +21,9 @@ class UIWatchersPlugin extends BasePlugin {
   /** Per-session watcher storage (keyed by sessionId) */
   private stores: Map<string, WatcherStore>;
 
+  /** Plugin configuration */
+  private config: Required<PluginConfig>;
+
   /**
    * Creates an instance of UIWatchersPlugin
    * @param pluginName - The name of the plugin
@@ -27,8 +31,11 @@ class UIWatchersPlugin extends BasePlugin {
    */
   constructor(pluginName: string, cliArgs?: Record<string, unknown>) {
     super(pluginName, cliArgs);
+
+    this.config = Object.assign({}, DefaultPluginConfig, cliArgs as PluginConfig);
+
     this.stores = new Map();
-    log.info('[UIWatchers] Plugin initialized');
+    log.info('[UIWatchers] Plugin initialized with config:', this.config);
   }
 
   /**
@@ -44,7 +51,7 @@ class UIWatchersPlugin extends BasePlugin {
     }
 
     if (!this.stores.has(sessionId)) {
-      this.stores.set(sessionId, new WatcherStore());
+      this.stores.set(sessionId, new WatcherStore(this.config));
       log.info(`[UIWatchers] Created watcher store for session ${sessionId}`);
     }
 

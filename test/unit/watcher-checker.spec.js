@@ -9,7 +9,8 @@ describe('WatcherChecker', function () {
   let mockDriver;
 
   beforeEach(function () {
-    store = new WatcherStore();
+    // Use default config values (same as schema defaults)
+    store = new WatcherStore({ maxWatchers: 5, maxDurationMs: 60000 });
 
     // Create mock driver
     mockDriver = {
