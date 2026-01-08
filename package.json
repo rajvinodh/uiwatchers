@@ -38,27 +38,7 @@
   },
   "appium": {
     "pluginName": "uiwatchers",
-    "mainClass": "UIWatchersPlugin",
-    "schema": {
-      "$schema": "http://json-schema.org/draft-07/schema",
-      "type": "object",
-      "properties": {
-        "max-watchers": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 20,
-          "default": 5,
-          "description": "Maximum number of UI watchers allowed per session"
-        },
-        "max-duration-ms": {
-          "type": "integer",
-          "minimum": 1000,
-          "maximum": 600000,
-          "default": 60000,
-          "description": "Maximum duration for each UI watcher in milliseconds"
-        }
-      }
-    }
+    "mainClass": "UIWatchersPlugin"
   },
   "dependencies": {
     "@appium/base-plugin": "^3.0.5",
