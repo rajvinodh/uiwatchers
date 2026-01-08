@@ -1,0 +1,72 @@
+{
+  "name": "appium-uiwatchers-plugin",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./lib/plugin.js",
+  "types": "./lib/plugin.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -rf lib coverage",
+    "prepublishOnly": "npm run build",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "mocha --config .mocharc.json \"test/unit/**/*.spec.js\"",
+    "test:integration": "mocha --config .mocharc.json \"test/integration/**/*.spec.js\"",
+    "test:e2e": "mocha --config .mocharc.json \"test/e2e/**/*.e2e.spec.cjs\"",
+    "test:coverage": "nyc npm run test",
+    "test:watch": "mocha --config .mocharc.json --watch",
+    "lint": "eslint src test && prettier --check .",
+    "lint:fix": "eslint src test --fix && prettier --write .",
+    "format": "prettier --write .",
+    "prepare": "husky",
+    "install:local": "npm run build && appium plugin install --source=local ."
+  },
+  "keywords": [
+    "appium",
+    "appium-plugin",
+    "automation",
+    "testing",
+    "mobile",
+    "ui-watchers",
+    "popup-handler"
+  ],
+  "author": "Vinodh Raj R",
+  "license": "MIT",
+  "description": "Appium plugin to automatically handle unexpected UI elements (popups, banners, dialogs) during test execution",
+  "peerDependencies": {
+    "appium": "^3.1.2"
+  },
+  "appium": {
+    "pluginName": "uiwatchers",
+    "mainClass": "UIWatchersPlugin"
+  },
+  "dependencies": {
+    "@appium/base-plugin": "^3.0.5",
+    "@appium/support": "^7.0.4"
+  },
+  "devDependencies": {
+    "@appium/fake-driver": "^6.0.1",
+    "@appium/plugin-test-support": "^1.0.4",
+    "@appium/test-support": "^4.0.4",
+    "@types/chai": "^5.2.3",
+    "@types/chai-as-promised": "^8.0.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^25.0.3",
+    "@types/sinon": "^21.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.51.0",
+    "@typescript-eslint/parser": "^8.51.0",
+    "appium-inspector-plugin": "^2025.11.1",
+    "chai": "^6.2.2",
+    "chai-as-promised": "^8.0.2",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "mocha": "^11.7.5",
+    "nyc": "^17.1.0",
+    "prettier": "^3.7.4",
+    "sinon": "^21.0.1",
+    "typescript": "^5.9.3",
+    "webdriverio": "^9.22.0"
+  }
+}
