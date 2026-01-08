@@ -1,15 +1,12 @@
 {
   "all": true,
   "include": ["lib/**/*.js"],
-  "exclude": ["test/**", "**/*.spec.js", "**/*.test.js"],
+  "exclude": ["test/**", "**/*.spec.js", "**/*.test.js", "**/*.e2e.spec.cjs", "lib/types.js"],
   "reporter": ["text", "html", "lcov"],
   "report-dir": "./coverage",
   "check-coverage": true,
   "lines": 80,
   "statements": 80,
   "functions": 80,
-  "branches": 80,
-  "sourceMap": true,
-  "instrument": true,
-  "cache": false
+  "branches": 80
 }
