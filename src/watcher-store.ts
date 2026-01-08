@@ -3,11 +3,7 @@
  */
 
 import type { WatcherState, UIWatcher } from './types.js';
-
-/**
- * Maximum number of watchers allowed per session
- */
-const MAX_WATCHERS = 5;
+import type { PluginConfig } from './config.js';
 
 /**
  * WatcherStore manages the lifecycle and state of all registered UI watchers
@@ -19,9 +15,21 @@ export class WatcherStore {
   /** Global enable/disable flag for watcher checking */
   private enabled: boolean;
 
-  constructor() {
+  /** Plugin configuration */
+  private config: Required<PluginConfig>;
+
+  constructor(config: Required<PluginConfig>) {
     this.watchers = new Map();
     this.enabled = true;
+    this.config = config;
+  }
+
+  /**
+   * Get the plugin configuration
+   * @returns The plugin configuration
+   */
+  getConfig(): Required<PluginConfig> {
+    return this.config;
   }
 
   /**
@@ -38,8 +46,8 @@ export class WatcherStore {
 
     // Check maximum watcher limit (count only non-expired watchers)
     const activeCount = this.getActiveWatchers().length;
-    if (activeCount >= MAX_WATCHERS) {
-      throw new Error('Maximum 5 UI watchers allowed per session');
+    if (activeCount >= this.config.maxWatchers) {
+      throw new Error(`Maximum ${this.config.maxWatchers} UI watchers allowed per session`);
     }
 
     // Create watcher state with computed fields

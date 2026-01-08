@@ -19,8 +19,11 @@ export async function registerUIWatcher(
   store: WatcherStore,
   params: UIWatcher
 ): Promise<RegisterWatcherResult> {
-  // Validate parameters
-  validateWatcherParams(params);
+  // Get configuration from store
+  const config = store.getConfig();
+
+  // Validate parameters with configured max duration
+  validateWatcherParams(params, config.maxDurationMs);
 
   // Add watcher to store (this will throw if validation fails at store level)
   const watcherState = store.add(params);

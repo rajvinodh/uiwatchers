@@ -14,7 +14,8 @@ describe('WatcherStore', function () {
   });
 
   beforeEach(function () {
-    store = new WatcherStore();
+    // Use default config values (same as schema defaults)
+    store = new WatcherStore({ maxWatchers: 5, maxDurationMs: 60000 });
   });
 
   describe('add', function () {
@@ -359,6 +360,46 @@ describe('WatcherStore', function () {
 
       store.disable();
       expect(store.isEnabled()).to.be.false;
+    });
+  });
+
+  describe('custom configuration', function () {
+    it('should respect custom maxWatchers limit', function () {
+      const customConfig = { maxWatchers: 3, maxDurationMs: 60000 };
+      const customStore = new WatcherStore(customConfig);
+
+      // Should allow 3 watchers
+      customStore.add(createValidWatcher('watcher-1'));
+      customStore.add(createValidWatcher('watcher-2'));
+      customStore.add(createValidWatcher('watcher-3'));
+
+      // 4th should fail
+      expect(() => customStore.add(createValidWatcher('watcher-4'))).to.throw(
+        'Maximum 3 UI watchers allowed per session'
+      );
+    });
+
+    it('should work with increased maxWatchers limit', function () {
+      const customConfig = { maxWatchers: 10, maxDurationMs: 60000 };
+      const customStore = new WatcherStore(customConfig);
+
+      // Should allow 10 watchers
+      for (let i = 1; i <= 10; i++) {
+        customStore.add(createValidWatcher(`watcher-${i}`));
+      }
+
+      // 11th should fail
+      expect(() => customStore.add(createValidWatcher('watcher-11'))).to.throw(
+        'Maximum 10 UI watchers allowed per session'
+      );
+    });
+
+    it('should return config via getConfig()', function () {
+      const customConfig = { maxWatchers: 8, maxDurationMs: 120000 };
+      const customStore = new WatcherStore(customConfig);
+
+      const config = customStore.getConfig();
+      expect(config).to.deep.equal(customConfig);
     });
   });
 });
