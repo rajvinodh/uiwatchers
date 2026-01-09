@@ -8,7 +8,7 @@
 
 ## Introduction
 
-Mobile apps often display unexpected UI elements—cookie consent dialogs, permission prompts, rating popups—that break test automation. Traditional approaches require explicit waits or try-catch blocks scattered throughout test code.
+Mobile apps often display unexpected UI elements — cookie consent dialogs, permission prompts, rating popups—that break test automation. Traditional approaches require explicit waits or try-catch blocks scattered throughout test code.
 
 This plugin provides a centralized, declarative way to handle these interruptions automatically.
 
@@ -20,7 +20,7 @@ This plugin provides a centralized, declarative way to handle these interruption
 - **Cooldown Support** — Wait for stable UI after dismissing an element
 - **Auto-Expiry** — Watchers automatically expire after specified duration
 - **One-Shot or Continuous** — Stop after first trigger or keep watching
-- **Transparent Interception** — Handles findElement, findElements, and element actions automatically
+- **Transparent Interception** — Handles on findElement, findElements, and element actions automatically
 - **Session-Scoped** — Each session maintains its own independent set of watchers
 
 ## Installation
@@ -294,14 +294,6 @@ flowchart TD
     I --> J[Retry original command]
     J --> D
 ```
-
-1. **Interception** — Plugin intercepts `findElement`, `findElements`, and element actions
-2. **Failure Detection** — On exception or empty result, watcher checking begins
-3. **Priority Order** — Watchers are checked in descending priority order
-4. **Detection** — For each watcher, attempts to find the reference element
-5. **Action** — If found, clicks the action element to dismiss
-6. **Cooldown** — Waits for UI to stabilize (if cooldownMs configured)
-7. **Retry** — Original command is retried
 
 ### Stale Element Recovery Flow
 
