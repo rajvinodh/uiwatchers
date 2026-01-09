@@ -13,12 +13,16 @@ const log = logger.getLogger('AppiumUIWatchers');
  * Check all active watchers and execute actions for matching elements
  * @param driver - Appium driver instance
  * @param store - Watcher store instance
+ * @returns true if at least one watcher was successfully triggered, false otherwise
  */
-export async function checkWatchers(driver: any, store: WatcherStore): Promise<void> {
+export async function checkWatchers(driver: any, store: WatcherStore): Promise<boolean> {
+  // Track if any watcher was triggered
+  let watcherTriggered = false;
+
   // Check if watchers are globally disabled
   if (!store.isEnabled()) {
     log.debug('[UIWatchers] Watcher checking is disabled, skipping');
-    return;
+    return false;
   }
 
   // Get active, sorted watchers (by priority desc, then FIFO)
@@ -27,7 +31,7 @@ export async function checkWatchers(driver: any, store: WatcherStore): Promise<v
   // Early return if no active watchers
   if (watchers.length === 0) {
     log.debug('[UIWatchers] No active watchers to check');
-    return;
+    return false;
   }
 
   log.debug(`[UIWatchers] Checking ${watchers.length} active watchers`);
@@ -67,6 +71,7 @@ export async function checkWatchers(driver: any, store: WatcherStore): Promise<v
 
         // Action click succeeded
         log.info(`[UIWatchers] UIWatcher '${watcher.name}' triggered successfully`);
+        watcherTriggered = true;
 
         // Update trigger statistics
         store.incrementTriggerCount(watcher.name);
@@ -103,5 +108,6 @@ export async function checkWatchers(driver: any, store: WatcherStore): Promise<v
     }
   }
 
-  log.debug('[UIWatchers] Watcher checking complete');
+  log.debug(`[UIWatchers] Watcher checking complete (triggered=${watcherTriggered})`);
+  return watcherTriggered;
 }
