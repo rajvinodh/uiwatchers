@@ -56,6 +56,20 @@
           "maximum": 600000,
           "default": 60000,
           "description": "Maximum duration for each UI watcher in milliseconds"
+        },
+        "max-cache-entries": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "default": 50,
+          "description": "Maximum element references to cache for stale element recovery"
+        },
+        "element-ttl-ms": {
+          "type": "integer",
+          "minimum": 5000,
+          "maximum": 300000,
+          "default": 60000,
+          "description": "TTL for cached element references in milliseconds"
         }
       }
     }

@@ -158,3 +158,50 @@ export interface ToggleWatchersResult {
   /** Status message */
   message: string;
 }
+
+// ============================================================================
+// Element Reference Caching Types (for StaleElement recovery)
+// ============================================================================
+
+/**
+ * Cached reference for element from findElement
+ */
+export interface CachedElementRef {
+  /** Locator strategy used to find the element */
+  using: string;
+
+  /** Locator value used to find the element */
+  value: string;
+
+  /** Source operation that found this element */
+  source: 'findElement';
+
+  /** Timestamp when this reference was cached */
+  createdAt: number;
+}
+
+/**
+ * Cached reference for element from findElements
+ * Includes the index position in the result array
+ */
+export interface CachedElementsRef {
+  /** Locator strategy used to find the elements */
+  using: string;
+
+  /** Locator value used to find the elements */
+  value: string;
+
+  /** Index position of this element in the findElements result array */
+  index: number;
+
+  /** Source operation that found this element */
+  source: 'findElements';
+
+  /** Timestamp when this reference was cached */
+  createdAt: number;
+}
+
+/**
+ * Union type for cached element references
+ */
+export type CachedRef = CachedElementRef | CachedElementsRef;
