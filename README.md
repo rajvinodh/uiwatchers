@@ -287,11 +287,12 @@ flowchart TD
     C --> D[Return result]
     B -->|No / Empty| E[Check watchers by priority]
     E --> F{Reference element found?}
-    F -->|No| G[Next watcher]
-    G --> E
+    F -->|No| G{More watchers?}
+    G -->|Yes| E
     F -->|Yes| H[Click action element]
     H --> I[Apply cooldown]
-    I --> J[Retry original command]
+    I --> G
+    G -->|No| J[Retry original command]
     J --> D
 ```
 
