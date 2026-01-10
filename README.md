@@ -33,7 +33,7 @@ This feature was deprecated and never made it to UiAutomator 2.0. This plugin br
 ### From npm
 
 ```bash
-appium plugin install appium-uiwatchers-plugin
+appium plugin install --source=npm appium-uiwatchers-plugin
 ```
 
 ### From local source
