@@ -4,6 +4,9 @@
   "type": "module",
   "main": "./lib/plugin.js",
   "types": "./lib/plugin.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
