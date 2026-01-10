@@ -4,13 +4,18 @@
 [![Appium 3.x](https://img.shields.io/badge/Appium-3.x-purple.svg)](https://appium.io/)
 [![Node.js 18+](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![npm version](https://img.shields.io/npm/v/appium-uiwatchers-plugin.svg)](https://www.npmjs.com/package/appium-uiwatchers-plugin)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/rajvinodh/appium-uiwatchers-plugin/ci.yml?branch=main)](https://github.com/rajvinodh/appium-uiwatchers-plugin/actions)
 
 ## Introduction
 
 Mobile apps often display unexpected UI elements — cookie consent dialogs, permission prompts, rating popups—that break test automation. Traditional approaches require explicit waits or try-catch blocks scattered throughout test code.
 
 This plugin provides a centralized, declarative way to handle these interruptions automatically.
+
+## Motivation
+
+Android's UiAutomator 1.0 had a [UiWatcher](https://developer.android.com/reference/androidx/test/uiautomator/UiWatcher) API that automatically handled unexpected dialogs during tests. When the framework couldn't find an element, it would run registered watchers to dismiss blockers like ANR dialogs or permission prompts.
+
+This feature was deprecated and never made it to UiAutomator 2.0. This plugin brings the same concept to Appium — working across both Android and iOS.
 
 ## Features
 
@@ -25,7 +30,7 @@ This plugin provides a centralized, declarative way to handle these interruption
 
 ## Installation
 
-### From npm (coming soon)
+### From npm
 
 ```bash
 appium plugin install appium-uiwatchers-plugin
