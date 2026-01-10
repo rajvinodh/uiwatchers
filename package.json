@@ -1,6 +1,6 @@
 {
   "name": "appium-uiwatchers-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "main": "./lib/plugin.js",
   "types": "./lib/plugin.d.ts",
