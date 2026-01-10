@@ -4,6 +4,9 @@
   "type": "module",
   "main": "./lib/plugin.js",
   "types": "./lib/plugin.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
@@ -32,6 +35,14 @@
   ],
   "author": "Vinodh Raj R",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajvinodh/uiwatchers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rajvinodh/uiwatchers/issues"
+  },
+  "homepage": "https://github.com/rajvinodh/uiwatchers#readme",
   "description": "Appium plugin to automatically handle unexpected UI elements (popups, banners, dialogs) during test execution",
   "peerDependencies": {
     "appium": "^3.1.2"
